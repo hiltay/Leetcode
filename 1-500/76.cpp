@@ -40,14 +40,7 @@ public:
 
 
         }
-        string ret;
-        if (low_log<=high_log){
-            for(;low_log<=high_log;low_log++){
-                ret.push_back(s[low_log]);
-            }
-        }
-        return ret;
-
+        return lenth==s.size()+1?"":s.substr(low_log,lenth);
     }
 
 private:
