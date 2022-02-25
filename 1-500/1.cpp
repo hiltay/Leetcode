@@ -19,34 +19,53 @@ using namespace std;
 //    };
 //};
 
+// 先放入map后查找
+//class Solution {
+//public:
+//    vector<int> twoSum(vector<int>& nums, int target) {
+//        vector<int> ret;
+//        unordered_map<int,int> mp;
+//        for(int i=0;i<nums.size();i++){
+//            auto r =mp.emplace(make_pair(nums[i],i));
+//            if (!r.second&&nums[i]*2==target){
+//                // 如果查找map中存在相同key，并且key*2==target
+//                auto it = mp.find(nums[i]);
+//                ret.push_back(it->second);
+//                ret.push_back(i);
+//                return ret;
+//            }
+//        }
+//        unordered_map<int,int>::iterator it;
+//        for(it=mp.begin();it!=mp.end();it++){
+//            auto it2=mp.find(target-it->first);
+//            if (it2!=mp.end()&&it2->first!=it->first){
+//                ret.push_back(it->second);
+//                ret.push_back(it2->second);
+//                return ret;
+//            }
+//        }
+//        return ret;
+//    };
+//};
 
+// 边找边插入
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
         vector<int> ret;
         unordered_map<int,int> mp;
         for(int i=0;i<nums.size();i++){
-            auto r =mp.emplace(make_pair(nums[i],i));
-            if (!r.second&&nums[i]*2==target){
-                // 如果查找map中存在相同key，并且key*2==target
-                auto it = mp.find(nums[i]);
+            auto it = mp.find(target-nums[i]);
+            if (it!=mp.end()&&it->first+nums[i]==target){
                 ret.push_back(it->second);
                 ret.push_back(i);
                 return ret;
-            }
-        }
-        unordered_map<int,int>::iterator it;
-        for(it=mp.begin();it!=mp.end();it++){
-            auto it2=mp.find(target-it->first);
-            if (it2!=mp.end()&&it2->first!=it->first){
-                ret.push_back(it->second);
-                ret.push_back(it2->second);
-                return ret;
-            }
+            } else mp.emplace(make_pair(nums[i],i));
         }
         return ret;
     };
 };
+
 
 int main() {
     // 输入：nums = [2,7,11,15], target = 9
