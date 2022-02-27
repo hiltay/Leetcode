@@ -3,6 +3,7 @@
 #include <unordered_map>
 
 using namespace std;
+
 class Solution {
 public:
     int maxPoints(vector<vector<int>>& points) {
@@ -12,7 +13,7 @@ public:
             unordered_map<double,int> mp;
             int zero=0;
             for(int j=i+1;j<points.size();j++){
-                // 求斜率，可能会有有精度问题（本题暂时accepted）
+                // 求斜率，可能会有精度问题（本题暂时accepted）
                 if (points[i][0]-points[j][0]==0) zero++;
                 double k=(double)(points[i][1]-points[j][1])/(points[i][0]-points[j][0]);
                 mp[k]++;
