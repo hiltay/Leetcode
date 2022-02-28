@@ -37,29 +37,44 @@ void printlinkedlist(ListNode *head) {
 }
 class Solution {
 public:
-    ListNode* swapPairs(ListNode* head) {
-        ListNode*dummy=new ListNode(-101,head),*s=dummy;
-        while (s->next!= nullptr&&s->next->next!= nullptr){
-            ListNode*l=s->next,*r=l->next,*next=r->next;
-            s->next=r;
-            r->next=l;
-            l->next=next;
-
-            s=l;
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        //k 是一个正整数，它的值小于或等于链表的长度。
+        ListNode*dummy=new ListNode(-101,head),*s=dummy,*cur=dummy;
+        int pr=-1;
+        while (cur!= nullptr){
+            cur=cur->next;
+            pr++;
         }
-        ListNode* ret=dummy->next;
+        while (pr>=k&&s->next&&s->next->next){
+            ListNode*l=s->next,*r=l->next,*next=r->next,*pre=l;
+            int len=2;
+            while (k-len>=0){
+                r->next=pre;
+                pre=r;
+                r=next;
+                if (r)
+                    next=next->next;
+                len++;
+            }
+            s->next=pre;
+            l->next=r;
+            s=l;
+            pr-=k;
+        }
+        ListNode*ret=dummy->next;
         delete dummy;
         return ret;
+
     }
 };
 int main() {
 
     Solution s = Solution();
     vector<int> arr = {1, 2, 3, 4, 5};
-    ListNode *head = createlinkedlist(arr, 1);
-    ListNode*ret=s.swapPairs(head);
+    ListNode *head = createlinkedlist(arr, 5);
+    ListNode*ret=s.reverseKGroup(head,4);
     printlinkedlist(ret);
-    //输入：head = [1,2,3,4]
-    //输出：[2,1,4,3]
+    //输入：head = [1,2,3,4,5], k = 2
+    //输出：[2,1,4,3,5]
     return 0;
 }
