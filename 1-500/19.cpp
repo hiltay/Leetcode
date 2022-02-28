@@ -35,25 +35,49 @@ void printlinkedlist(ListNode *head) {
     }
     cout << endl;
 }
+//class Solution {
+//public:
+//    ListNode* removeNthFromEnd(ListNode* head, int n) {
+//        int lenth=-1;
+//        ListNode*dummy=new ListNode(-1,head);
+//        ListNode*slow=dummy,*fast=dummy;
+//        while (slow!= nullptr){
+//
+//            if (fast!= nullptr){
+//                fast=fast->next;
+//                lenth++;
+//            }
+//
+//            if (fast== nullptr){
+//                if (lenth-n>0){
+//                    slow=slow->next;
+//                    lenth--;
+//                } else break;
+//
+//            }
+//        }
+//        ListNode*del=slow->next;
+//        slow->next=del->next;
+//        delete del;
+//
+//        del=dummy->next;
+//        delete dummy;
+//        return del;
+//    }
+//};
 class Solution {
 public:
     ListNode* removeNthFromEnd(ListNode* head, int n) {
-        int lenth=-1;
+        if (head== nullptr) return head;
         ListNode*dummy=new ListNode(-1,head);
         ListNode*slow=dummy,*fast=dummy;
-        while (slow!= nullptr){
-
-            if (fast!= nullptr){
+        while (fast!= nullptr){
+            if (n+1>0){
                 fast=fast->next;
-                lenth++;
-            }
-
-            if (fast== nullptr){
-                if (lenth-n>0){
-                    slow=slow->next;
-                    lenth--;
-                } else break;
-
+                n--;
+            } else{
+                fast=fast->next;
+                slow=slow->next;
             }
         }
         ListNode*del=slow->next;
@@ -69,8 +93,8 @@ int main() {
 
     Solution s = Solution();
     vector<int> arr = {1, 2, 3, 4, 5};
-    ListNode *head = createlinkedlist(arr, 1);
-    ListNode*ret=s.removeNthFromEnd(head,1);
+    ListNode *head = createlinkedlist(arr, 5);
+    ListNode*ret=s.removeNthFromEnd(head,5);
     printlinkedlist(ret);
     //输入：head = [1,2,3,4,5], n = 2
     //输出：[1,2,3,5]
